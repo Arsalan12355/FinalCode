@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "944856282108",
+    "firebase_url": "https://surveillancesystem-a1800-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "surveillancesystem-a1800",
+    "storage_bucket": "surveillancesystem-a1800.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:944856282108:android:8996e5f48e0986ad55b879",
+        "android_client_info": {
+          "package_name": "com.example.surveillance_system"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "944856282108-6m0iliq9te4q0phrri6jkjfbaqrji4hd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.surveillance_system",
+            "certificate_hash": "634b781e5296fea9af8b3f0c59cca5d8ed8132c8"
+          }
+        },
+        {
+          "client_id": "944856282108-ho9bdn1q68n6m00u93747to6gopdr8ud.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-0DuDfUH1_D4-mUvmj897IaJOOeJODN4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "944856282108-ho9bdn1q68n6m00u93747to6gopdr8ud.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

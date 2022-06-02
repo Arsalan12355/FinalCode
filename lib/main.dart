@@ -8,7 +8,6 @@ import 'package:surveillance_system/screens/loading_screen.dart';
 import 'package:surveillance_system/screens/update_profile.dart';
 import 'package:surveillance_system/screens/user_profile.dart';
 import 'auth/forget_password.dart';
-import 'auth/login.dart';
 import 'auth/sign_up.dart';
 import 'package:get/get.dart';
 
@@ -50,7 +49,7 @@ class MyApp extends StatelessWidget {
             routes: {
               "/home": (context) => Home(),
               "/sign-up": (context) => SignUp(),
-              "/login": (context) => Login(),
+              "/login": (context) => LoginPage(),
               "/forget-password": (context) => ForgetPassword(),
               "/user-profile": (context) => UserProfile(),
               "/update-profile": (context) => Update_Profile(),

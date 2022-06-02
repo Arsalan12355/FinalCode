@@ -5,16 +5,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:surveillance_system/Api/notification_api.dart';
 import 'package:surveillance_system/auth/forget_password.dart';
-import 'package:surveillance_system/auth/login.dart';
 import 'package:surveillance_system/auth/login_new.dart';
 import 'package:surveillance_system/screens/camera_screen.dart';
 import 'package:surveillance_system/screens/newfile1.dart';
 import 'package:surveillance_system/screens/update_profile.dart';
 import 'package:surveillance_system/screens/user_profile.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
+import '../auth/change_pasword.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -25,17 +27,40 @@ class _HomeState extends State<Home> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final googleSignIn = GoogleSignIn();
 
-  logOut() async {
-    await auth.signOut();
+  // logOut() async {
+  //   try {
+  //     await FirebaseAuth.instance.signOut();
+  //     googleSignIn.disconnect();
+  //     setState(() {});
+  //     print("user diconnected");
+
+  //     // Navigator.of(context).pushAndRemoveUntil(
+  //     //     MaterialPageRoute(builder: (context) => LoginPage()), (route) => false);
+  //     Get.to(LoginPage());
+  //   // ignore: nullable_type_in_catch_clause
+  //   }  catch (e) {
+  //     print('Error ...:');
+  //           print(e);
+  //   };
+  // }
+
+
+    Future<void> logout(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
     googleSignIn.disconnect();
     setState(() {});
     print("user diconnected");
+    Get.to(LoginPage());
 
-    Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => LoginPage()), (route) => false);
+    // Navigator.of(context).pushReplacement(
+    //     MaterialPageRoute(builder: (context) => LoginPage()));
   }
 
+
+  
+
   Future<void> _newLogout() async {
+
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -75,7 +100,7 @@ class _HomeState extends State<Home> {
             ElevatedButton(
               child: Text('Logout'),
               onPressed: () {
-                logOut();
+                logout(context);
               },
             ),
           ],
@@ -123,6 +148,9 @@ class _HomeState extends State<Home> {
     _dbref = FirebaseDatabase.instance.ref();
     NotificationApi.init();
     listenNotifications();
+    getValue();
+    getDetect1();
+
   }
 
   void listenNotifications() {
@@ -167,8 +195,10 @@ class _HomeState extends State<Home> {
   //               channelDescription: channel.description)));
   // }
 
-  Object? value;
+  Object? valview;
+  Object? valdetect;
   bool isValue = false;
+  bool isValue2 = true;
 
   void getValue() async {
     _dbref!
@@ -178,23 +208,48 @@ class _HomeState extends State<Home> {
         .listen((DatabaseEvent event) {
       Object? data = event.snapshot.value;
       setState(() {
-        value = data;
+        valview = data;
       });
-      // print('view: $data');
+      print('valview: $data');
     });
   }
 
+  void getDetect1() async {
+    _dbref!
+        .child('pi_data')
+        .child('detection')
+        .onValue
+        .listen((DatabaseEvent event) {
+      Object? data = event.snapshot.value;
+      setState(() {
+        valdetect= data;
+      });
+      print('valdetect: $data');
+    });
+  }
+
+
+  
+  
+
   @override
   Widget build(BuildContext context) {
-    getValue();
-    if (value == true) {
+    // getValue();
+    // getDetect1();
+    if (valview == true) {
       setState(() {
         isValue = false;
-        // print("isValue: $isValue");
+        print("isValue: $isValue");
+      });
+    }
+    if (valdetect == false){
+      setState(() {
+        isValue2 = true;
+        print("isValue2: $isValue2");
       });
     }
     // print("isValue: $isValue");
-    if (value == false && isValue == false) {
+    if (valview== false && isValue == false && valdetect == true) {
       NotificationApi.showNotification(
           title: 'Warning!',
           body: "Motion Detected By Camera! Please Check What's Going On",
@@ -329,8 +384,11 @@ class _HomeState extends State<Home> {
                           style: TextStyle(color: Colors.yellow),
                         ),
                         onTap: () {
-                          Get.to(Home() == Home() ? null : null);
+                          Get.to(Home());
                         },
+                        // onTap: () {
+                        //   Get.to(Home() == Home() ? null : null);
+                        // },
                       ),
                       ListTile(
                         leading: Icon(
@@ -357,7 +415,7 @@ class _HomeState extends State<Home> {
                         onTap: () 
                             {
                               if (isOAuth == "0" ){
-                                Get.to(ForgetPassword());
+                                Get.to(ChangePassword());
                               }
                               else{
                                 print("\n\n\nUser is from third party login !!!!!!!!!\n\n\n");
@@ -378,7 +436,7 @@ class _HomeState extends State<Home> {
                           style: TextStyle(color: Colors.yellow),
                         ),
                         onTap: () {
-                          logOut();
+                          _newLogout();
                         },
                       ),
                     ]),

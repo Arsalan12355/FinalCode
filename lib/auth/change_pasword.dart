@@ -6,44 +6,51 @@ import 'package:get/get.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:surveillance_system/auth/login_new.dart';
 
-class ForgetPassword extends StatefulWidget {
+class ChangePassword extends StatefulWidget {
   @override
-  State<ForgetPassword> createState() => _ForgetPasswordState();
+  State<ChangePassword> createState() => _ChangePasswordState();
 }
 
-class _ForgetPasswordState extends State<ForgetPassword> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController emailController = TextEditingController();
+class _ChangePasswordState extends State<ChangePassword> {
+  final _formKey = GlobalKey<FormState>();
 
-  resetPassword() async {
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => Center(
-              child: CircularProgressIndicator(),
-            ));
-    try {
-      await FirebaseAuth.instance
-          .sendPasswordResetEmail(email: emailController.text.trim());
-      print("Password reset email sent");
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => LoginPage()));
+  var newPassword = "";
+  // Create a text controller and use it to retrieve the current value
+  // of the TextField.
 
-      CoolAlert.show(
-        context: context,
-        type: CoolAlertType.success,
-        text: "Password reset email sent",
-      );
-    } catch (e) {
-      print(e.toString());
-    }
+  final newPasswordController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    newPasswordController.dispose();
+    super.dispose();
   }
 
-  // @override
-  // void dispose() {
-  //   emailController.dispose();
-  //   super.dispose();
-  // }
+  final currentUser = FirebaseAuth.instance.currentUser;
+  changePassword() async {
+    try {
+      await currentUser!.updatePassword(newPassword);
+      FirebaseAuth.instance.signOut();
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => Login()),
+      // );
+        Get.to(LoginPage());
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.orangeAccent,
+          content: Text(
+            'Your Password has been Changed. Login again !',
+            style: TextStyle(fontSize: 18.0),
+          ),
+        ),
+      );
+    } catch (e) {}
+  }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +69,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
           ),
           backgroundColor: Color(0xfff4d657),
           title: Text(
-            "Forget Password",
+            "Change Password",
             style: TextStyle(color: Colors.black),
           ),
           centerTitle: true,
@@ -72,54 +79,28 @@ class _ForgetPasswordState extends State<ForgetPassword> {
             key: _formKey,
             child: Column(
               children: [
-                // Padding(
-                //   padding: const EdgeInsets.only(top: 15, left: 20, right: 20),
-                //   child: TextFormField(
-                //     controller: emailController,
-                //     keyboardType: TextInputType.emailAddress,
-                //     validator: (value) {
-                //       if (value!.isNotEmpty && value.length > 7) {
-                //         return null;
-                //       } else if (value.length < 7 && value.isNotEmpty) {
-                //         return "Your email address is too short";
-                //       } else {
-                //         return "Please enter your email address";
-                //       }
-                //     },
-                //     decoration: InputDecoration(
-                //       labelText: "Email",
-                //       prefixIcon: Icon(
-                //         Icons.email,
-                //         color: Colors.purple[500],
-                //       ),
-                //       border: OutlineInputBorder(
-                //         borderRadius: BorderRadius.circular(30.0),
-                //         borderSide: BorderSide.none,
-                //       ),
-                //       filled: true,
-                //     ),
-                //   ),
-                // ),
                 Padding(
                   padding: const EdgeInsets.only(top: 16, left: 20, right: 20),
                   child: TextFormField(
                     cursorColor: Colors.yellow,
-                    controller: emailController,
+                    controller: newPasswordController,
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
-                      if (value!.isNotEmpty && value.length > 7) {
+                      if (value!.isNotEmpty && value.length > 6) {
                         return null;
-                      } else if (value.length < 7 && value.isNotEmpty) {
-                        return "Your email address is too short";
+                      } else if (value.length < 6 && value.isNotEmpty) {
+                        return "Your password is too short";
                       } else {
-                        return "Please enter your email address";
+                        return "Please enter your new password";
                       }
                     },
                     decoration: InputDecoration(
                         labelStyle: TextStyle(color: Color(0xfff4d657)),
-                        labelText: "Email",
+                        labelText: "New Password",
+                        hintText: 'Enter New Password',
+
                         prefixIcon: Icon(
-                          Icons.email_outlined,
+                          Icons.lock,
                           color: Color(0xfff4d657),
                         ),
                         border: OutlineInputBorder(
@@ -131,7 +112,15 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   ),
                 ),
                 InkWell(
-                  onTap: resetPassword,
+                  onTap: ()
+                  {
+                if (_formKey.currentState!.validate()) {
+                  setState(() {
+                    newPassword = newPasswordController.text;
+                  });
+                  changePassword();
+                }
+                  },
                   child: Container(
                     margin: EdgeInsets.only(top: 20),
                     decoration: BoxDecoration(
@@ -149,7 +138,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     width: 200,
                     child: Center(
                       child: Text(
-                        "Reset Password",
+                        "Change Password",
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 18),
                       ),
@@ -166,3 +155,4 @@ class _ForgetPasswordState extends State<ForgetPassword> {
     );
   }
 }
+

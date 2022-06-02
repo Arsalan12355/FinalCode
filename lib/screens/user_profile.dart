@@ -2,13 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:surveillance_system/auth/login_new.dart';
 import 'package:surveillance_system/screens/home.dart';
 import 'package:surveillance_system/screens/update_profile.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../auth/login.dart';
 
 class UserProfile extends StatefulWidget {
   @override
@@ -69,17 +70,29 @@ class _UserProfileState extends State<UserProfile> {
         });
   }
 
-  logOut() async {
-    final FirebaseAuth auth = FirebaseAuth.instance;
-    final googleSignIn = GoogleSignIn();
+  // logOut() async {
+  //   final FirebaseAuth auth = FirebaseAuth.instance;
+  //   final googleSignIn = GoogleSignIn();
 
-    await auth.signOut();
+  //   await auth.signOut();
+  //   googleSignIn.disconnect();
+  //   setState(() {});
+  //   print("user diconnected");
+
+  //   Navigator.of(context).pushAndRemoveUntil(
+  //       MaterialPageRoute(builder: (context) => LoginPage()), (route) => false);
+  // }
+
+  Future<void> logout(BuildContext context) async {
+    final googleSignIn = GoogleSignIn();
+    await FirebaseAuth.instance.signOut();
     googleSignIn.disconnect();
     setState(() {});
     print("user diconnected");
-
-    Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => LoginPage()), (route) => false);
+    Get.to(LoginPage());
+    
+    // Navigator.of(context).pushReplacement(
+    //     MaterialPageRoute(builder: (context) => LoginPage()));
   }
 
   Future<void> _newLogout() async {
@@ -122,7 +135,7 @@ class _UserProfileState extends State<UserProfile> {
             ElevatedButton(
               child: Text('Logout'),
               onPressed: () {
-                logOut();
+                logout(context);
               },
             ),
           ],

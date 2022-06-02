@@ -298,7 +298,9 @@ class _Update_ProfileState extends State<Update_Profile> {
                             //   ),
                             // ),
                             InkWell(
-                              onTap: updateProfile,
+                              onTap: (){
+                                Get.to(() => UserProfile());
+                                },
                               child: Container(
                                 margin: EdgeInsets.only(top: 20, bottom: 20),
                                 decoration: BoxDecoration(

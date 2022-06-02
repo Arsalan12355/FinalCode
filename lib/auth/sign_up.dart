@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:surveillance_system/auth/login_new.dart';
 import 'dart:io';
 
 import '../screens/home.dart';
 import '../screens/loading_screen.dart';
-import 'login.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -96,7 +96,7 @@ class _SignUpState extends State<SignUp> {
   }
 
   goBack() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
   }
 
   @override

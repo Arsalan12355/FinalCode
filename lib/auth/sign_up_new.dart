@@ -3,8 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:surveillance_system/auth/login.dart';
+import 'package:surveillance_system/auth/login_new.dart';
 import 'package:surveillance_system/screens/home.dart';
+import 'package:surveillance_system/screens/verifyemail.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -38,6 +39,7 @@ class _SignUpPageState extends State<SignUpPage> {
   //   });
   //   print(imagePath);
   // }
+
 
   final GoogleSignIn googleSignIn = GoogleSignIn();
   Future<UserCredential?> loginWithGoogle() async {
@@ -81,6 +83,7 @@ class _SignUpPageState extends State<SignUpPage> {
         }
       });
 
+
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => Home()), (route) => false);
     } catch (e) {
@@ -100,6 +103,11 @@ class _SignUpPageState extends State<SignUpPage> {
       // print(e.message.toString());
     }
   }
+
+
+
+
+
 
   signUp() async {
     if (!_formKey.currentState!.validate()) {
@@ -138,8 +146,9 @@ class _SignUpPageState extends State<SignUpPage> {
 
       print("Your registration has been completed !");
 
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => Home()), (route) => false);
+      // Navigator.of(context).pushAndRemoveUntil(
+      //     MaterialPageRoute(builder: (context) => verifyotp()), (route) => false);
+      Get.to(verifyotp());
     } catch (e) {
       setState(() {
         loading = false;
@@ -161,7 +170,7 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   goBack() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
   }
 
   @override

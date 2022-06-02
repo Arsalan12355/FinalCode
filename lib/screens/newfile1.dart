@@ -6,7 +6,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
+import 'package:surveillance_system/screens/home.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 
@@ -58,44 +61,19 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 
 
-// Future<Album> fetchAlbum() async {
-//   final response =
-//       await http.get("https://jsonplaceholder.typicode.com/posts/1");
- 
-//   // Appropriate action depending upon the
-//   // server response
-//   if (response.statusCode == 200) {
-//     return Album.fromJson(json.decode(response.body));
-//   } else {
-//     throw Exception('Failed to load album');
-//   }
-// }
- 
-// class Album {
-//   final int userId;
-//   final int id;
-//   final String title;
- 
-//   Album({required this.userId, required this.id, required this.title});
- 
-//   factory Album.fromJson(Map<String, dynamic> json) {
-//     return Album(
-//       userId: json['userId'],
-//       id: json['id'],
-//       title: json['title'],
-//     );
-//   }
-// }
 
 
 
 
 class CameraScreen extends StatefulWidget {
+
   @override
   State<CameraScreen> createState() => _CameraScreenState();
 }
 
 class _CameraScreenState extends State<CameraScreen> {
+
+  final referencedata = FirebaseDatabase.instance;
 
 Future<http.Response> getSirenOn() async {
     var url = Uri.parse("https://jsonplaceholder.typicode.com/posts/1");
@@ -121,35 +99,26 @@ Future<http.Response> getSirenof() async {
 
   bool isActive = false;
 
-  String? value1;
+  String? value1 = "true";
 
-  //  final databaseRef = FirebaseDatabase.instance.ref("pi_data/url");
-  // final Future<FirebaseApp> _future = Firebase.initializeApp();
 
-// void printFirebase(){
-//     databaseRef.once().then((DatabaseEvent event) {
-//       Object? data = event.snapshot.value;
-//       setState(() {
-//         value1 = data as String?;
-//       });
-
-//       print('Data : $data');
-//     });
-//   }
 
 
   @override
   void initState() {
     super.initState();
+    
     if (Platform.isAndroid) {
-      WebView.platform = SurfaceAndroidWebView(); 
-    }
+      WebView.platform = SurfaceAndroidWebView();
+   }
 
     // var futureAlbum = fetchAlbum();
     // printFirebase();
 
     // _dbref = FirebaseDatabase.instance.ref("pi_data/url");
   }
+
+
 
   // Object? value;
 
@@ -167,10 +136,14 @@ Future<http.Response> getSirenof() async {
   //   });
   // }
 
+  
+
 
   @override
   Widget build(BuildContext context) {
+    final ref = referencedata.ref();
     // getUrl();
+    
     // getRequest();
     if (isActive == true) {
       getSirenOn();
@@ -183,9 +156,36 @@ Future<http.Response> getSirenof() async {
     return Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
+                      leading: IconButton(
+                onPressed: () {
+                  ref
+                  .child("pi_data")
+                    .child("view")
+                    .set("false")
+                    .asStream();
+                  Get.to(Home());
+                },
+                icon: Icon(Icons.arrow_back)),
+            iconTheme: IconThemeData(
+              color: Colors.black, //change your color here
+            ),
+
           backgroundColor: const Color(0xfff4d657),
-          title: const Text("Camera Live View"),
-          actions: [
+          // title: const Text("Camera Live View"),
+          centerTitle: true,
+          title: Row(
+            children: [
+              Text(
+              'Camera Live View'),
+              Padding(padding: EdgeInsets.symmetric(horizontal: 18.0), ),
+                  Text("Siren",textAlign: TextAlign.right,
+                            style: TextStyle(
+                              fontSize: 16,
+                  ),
+                  ),
+            ],
+          ) ,
+           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 10),
               child: Switch(
@@ -206,7 +206,8 @@ Future<http.Response> getSirenof() async {
         ),
         body: WebView(
             javascriptMode: JavascriptMode.unrestricted,
-            initialUrl: "https://www.google.com"),
+            // initialUrl: "http://127.0.1.1:5000/"),
+            initialUrl: "https://www.google.com/"),
             );
   }
 }

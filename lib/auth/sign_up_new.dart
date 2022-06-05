@@ -27,7 +27,7 @@ class _SignUpPageState extends State<SignUpPage> {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore db = FirebaseFirestore.instance;
 
-  late String imagePath;
+   String? imagePath;
 
   bool loading = false;
 
@@ -83,9 +83,11 @@ class _SignUpPageState extends State<SignUpPage> {
         }
       });
 
+      Get.to(Home());
 
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => Home()), (route) => false);
+      // Navigator.of(context).pushAndRemoveUntil(
+      //     MaterialPageRoute(builder: (context) => Home()), (route) => false);
+
     } catch (e) {
       setState(() {
         loading = false;

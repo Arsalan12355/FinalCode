@@ -2,6 +2,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:surveillance_system/auth/change_pasword.dart';
 import 'package:surveillance_system/auth/login_new.dart';
 import 'package:surveillance_system/screens/home.dart';
 import 'package:surveillance_system/screens/loading_screen.dart';
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget {
               "/user-profile": (context) => UserProfile(),
               "/update-profile": (context) => Update_Profile(),
               "/loading-screen": (context) => LoadingScreen(),
+              "/change-pasword": (context) => ChangePassword(),
             },
           );
         }

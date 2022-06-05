@@ -177,17 +177,28 @@ Future<http.Response> getSirenof() async {
             children: [
               Text(
               'Camera Live View'),
-              Padding(padding: EdgeInsets.symmetric(horizontal: 18.0), ),
-                  Text("Siren",textAlign: TextAlign.right,
-                            style: TextStyle(
-                              fontSize: 16,
-                  ),
-                  ),
+              // Padding(padding: EdgeInsets.symmetric(horizontal: 18.0), ),
+              //     Text("Siren",textAlign: TextAlign.right,
+              //               style: TextStyle(
+              //                 fontSize: 16,
+              //     ),
+              //     ),
             ],
           ) ,
            actions: [
+             Container(
+               padding: EdgeInsets.fromLTRB(0, 17, 5, 5),
+               child: Text("Siren",
+                            style: TextStyle(
+                              fontSize: 16,
+                            
+                  ),
+                  ),
+
+             ),
             Padding(
-              padding: const EdgeInsets.only(right: 10),
+              padding: const EdgeInsets.only(right: 10,),
+              
               child: Switch(
                 activeTrackColor: Colors.grey.shade700,
                 inactiveTrackColor: Colors.grey.shade700,

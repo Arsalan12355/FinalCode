@@ -350,8 +350,7 @@ class _UserProfileState extends State<UserProfile> {
   }
 
   goToUpdateProfile() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => Update_Profile()));
+    Get.to(Update_Profile());
   }
 
   @override
@@ -389,7 +388,7 @@ class _UserProfileState extends State<UserProfile> {
                   if (snapshot.connectionState != ConnectionState.done)
                     return Center(
                         child: CircularProgressIndicator(
-                      color: Colors.purple,
+                      color: Color(0xfff4d657),
                     ));
 
                   return SingleChildScrollView(

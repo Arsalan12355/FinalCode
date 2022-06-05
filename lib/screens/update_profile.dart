@@ -77,9 +77,12 @@ class _Update_ProfileState extends State<Update_Profile> {
         firstName;
         lastName;
       });
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => UserProfile()),
-          (route) => false);
+      Get.to(UserProfile());
+
+      // Navigator.of(context).pushAndRemoveUntil(
+      //     MaterialPageRoute(builder: (context) => UserProfile()),
+      //     (route) => false);
+
     } catch (e) {
       setState(() {
         loading = false;
@@ -174,31 +177,6 @@ class _Update_ProfileState extends State<Update_Profile> {
                                         Color.fromARGB(92, 158, 158, 158)),
                               ),
                             ),
-
-                            // Padding(
-                            //   padding: const EdgeInsets.only(
-                            //       top: 15, left: 20, right: 20),
-                            //   child: TextFormField(
-                            //     controller: firstNameController,
-                            //     keyboardType: TextInputType.name,
-                            //     validator: (value) {
-                            //       if (value == null || value.isEmpty) {
-                            //         return 'Please enter your name';
-                            //       } else if (value.length < 3) {
-                            //         return "Your name is too short";
-                            //       }
-                            //       return null;
-                            //     },
-                            //     decoration: InputDecoration(
-                            //       labelText: "First Name",
-                            //       prefixIcon: Icon(
-                            //         Icons.email,
-                            //         color: Colors.purple[500],
-                            //       ),
-                            //       filled: true,
-                            //     ),
-                            //   ),
-                            // ),
                             Padding(
                               padding: const EdgeInsets.only(
                                   top: 8, left: 20, right: 20),
@@ -230,30 +208,6 @@ class _Update_ProfileState extends State<Update_Profile> {
                                         Color.fromARGB(92, 158, 158, 158)),
                               ),
                             ),
-                            // Padding(
-                            //   padding: const EdgeInsets.only(
-                            //       top: 15, left: 20, right: 20),
-                            //   child: TextFormField(
-                            //     controller: lastNameController,
-                            //     keyboardType: TextInputType.name,
-                            //     validator: (value) {
-                            //       if (value == null || value.isEmpty) {
-                            //         return 'Please enter your last name';
-                            //       } else if (value.length < 3) {
-                            //         return "Your name is too short";
-                            //       }
-                            //       return null;
-                            //     },
-                            //     decoration: InputDecoration(
-                            //       labelText: "Last Name",
-                            //       prefixIcon: Icon(
-                            //         Icons.email,
-                            //         color: Colors.purple[500],
-                            //       ),
-                            //       filled: true,
-                            //     ),
-                            //   ),
-                            // ),
                             Padding(
                               padding: const EdgeInsets.only(
                                   top: 8, left: 20, right: 20),
@@ -279,27 +233,10 @@ class _Update_ProfileState extends State<Update_Profile> {
                                         Color.fromARGB(92, 158, 158, 158)),
                               ),
                             ),
-                            // Padding(
-                            //   padding: const EdgeInsets.only(
-                            //       top: 15, left: 20, right: 20),
-                            //   child: TextFormField(
-                            //     readOnly: true,
-                            //     enabled: false,
-                            //     controller: emailController,
-                            //     keyboardType: TextInputType.emailAddress,
-                            //     decoration: InputDecoration(
-                            //       labelText: "Email",
-                            //       prefixIcon: Icon(
-                            //         Icons.email,
-                            //         color: Colors.purple[500],
-                            //       ),
-                            //       filled: true,
-                            //     ),
-                            //   ),
-                            // ),
                             InkWell(
                               onTap: (){
-                                Get.to(() => UserProfile());
+                                updateProfile();
+                                Get.to(UserProfile());
                                 },
                               child: Container(
                                 margin: EdgeInsets.only(top: 20, bottom: 20),
@@ -328,9 +265,6 @@ class _Update_ProfileState extends State<Update_Profile> {
                                 ),
                               ),
                             ),
-                            // ElevatedButton(
-                            //     onPressed: updateProfile,
-                            //     child: Text("Update")),
                           ],
                         ),
                       ),

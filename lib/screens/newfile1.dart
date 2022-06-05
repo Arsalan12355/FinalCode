@@ -80,8 +80,6 @@ Future<http.Response> getSirenOn() async {
     final response = await http.get(url);
   
     var responseData = json.decode(response.body);
-    print(responseData);
-
     return response;
   }
 
@@ -90,8 +88,6 @@ Future<http.Response> getSirenof() async {
     final response = await http.get(url1);
   
     var responseData = json.decode(response.body);
-    print(responseData);
-
     return response;
   }
 
@@ -151,8 +147,6 @@ Future<http.Response> getSirenof() async {
     if (isActive == false) {
       getSirenof();
     }
-    // print(value.toString());
-    // printFirebase();
     return Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
@@ -161,7 +155,7 @@ Future<http.Response> getSirenof() async {
                   ref
                   .child("pi_data")
                     .child("view")
-                    .set("false")
+                    .set(false)
                     .asStream();
                   Get.to(Home());
                 },
@@ -177,12 +171,6 @@ Future<http.Response> getSirenof() async {
             children: [
               Text(
               'Camera Live View'),
-              // Padding(padding: EdgeInsets.symmetric(horizontal: 18.0), ),
-              //     Text("Siren",textAlign: TextAlign.right,
-              //               style: TextStyle(
-              //                 fontSize: 16,
-              //     ),
-              //     ),
             ],
           ) ,
            actions: [
@@ -208,7 +196,6 @@ Future<http.Response> getSirenof() async {
                 onChanged: (value) {
                   setState(() {
                     isActive = value;
-                    // print(value);
                   });
                 },
               ),

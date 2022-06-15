@@ -81,10 +81,10 @@ class _SignUpPageState extends State<SignUpPage> {
 
           });
         }
-        return null;
+        // return null;
       });
 
-      // Get.to(Home());
+      Get.to(Home());
 
 
     } 

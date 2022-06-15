@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, avoid_print, prefer_const_literals_to_create_immutables, curly_braces_in_flow_control_structures, avoid_unnecessary_containers, use_key_in_widget_constructors
 
 import 'dart:async';
+import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -138,8 +139,10 @@ class _HomeState extends State<Home> {
   }
 
   goToProfile() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => UserProfile()));
+
+    Get.to(UserProfile());
+    // Navigator.push(
+    //     context, MaterialPageRoute(builder: (context) => UserProfile()));
   }
 
   @override
@@ -157,8 +160,10 @@ class _HomeState extends State<Home> {
     NotificationApi.onNotifications.stream.listen(onClickedNotification);
   }
 
-  void onClickedNotification(String? payload) => Navigator.of(context)
-      .push(MaterialPageRoute(builder: (context) => Home()));
+  void onClickedNotification(String? payload) => 
+  Get.to(Home());
+  // Navigator.of(context)
+  //     .push(MaterialPageRoute(builder: (context) => Home()));
 
   DatabaseReference? _dbref;
 
@@ -236,6 +241,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     // getValue();
     // getDetect1();
+
     if (valview == true) {
       setState(() {
         isValue = false;
@@ -249,7 +255,24 @@ class _HomeState extends State<Home> {
       });
     }
     // print("isValue: $isValue");
-    if (valview== false && isValue == false && valdetect == true) {
+    // var i = 1;
+    // while(i <= i++){
+    //       if (valview== false && valdetect == true) 
+          
+    //   NotificationApi.showNotification(
+    //       title: 'Warning!',
+    //       body: "Motion Detected By Camera! Please Check What's Going On",
+    //       payload: 'survelliance-system');
+    //   setState(() {
+    //     isValue = true;
+    //     // print("isValue: $isValue");
+    //   });
+    //   i++;
+    //   // print("isValue: $isValue");
+    
+
+    // }
+    if (valview== false && valdetect == true) {
       NotificationApi.showNotification(
           title: 'Warning!',
           body: "Motion Detected By Camera! Please Check What's Going On",

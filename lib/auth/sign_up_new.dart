@@ -61,11 +61,11 @@ class _SignUpPageState extends State<SignUpPage> {
       var signCre =
           await FirebaseAuth.instance.signInWithCredential(credential);
 
-      String fullName = googleUser.displayName!;
+      String? fullName = googleUser.displayName;
 
-      var names = fullName.split(' ');
-      var firstName = names[0];
-      var lastName = fullName.replaceAll(firstName, "");
+      var names = fullName?.split(' ');
+      var firstName = names?[0];
+      var lastName = fullName?.replaceAll(firstName!, "");
 
       db
           .collection('users')
@@ -81,29 +81,19 @@ class _SignUpPageState extends State<SignUpPage> {
 
           });
         }
+        return null;
       });
 
-      Get.to(Home());
+      // Get.to(Home());
 
-      // Navigator.of(context).pushAndRemoveUntil(
-      //     MaterialPageRoute(builder: (context) => Home()), (route) => false);
 
-    } catch (e) {
+    } 
+    catch (e) {
       setState(() {
         loading = false;
       });
-
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              content: Text(e.toString()),
-            );
-          });
-      // print(e.message);
-
-      // print(e.message.toString());
     }
+    return null;
   }
 
 

@@ -14,57 +14,6 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 
 
-// class User {
-//   final int id;
-//   final int userId;
-//   final String title;
-//   // final String body;
-  
-//   User({
-//     required this.id,
-//     required this.userId,
-//     required this.title,
-//     // required this.body,
-//   });
-//   factory User.fromJson(Map<String, dynamic> json) {
-//     return User(
-//       userId: json['userId'],
-//       id: json['id'],
-//       title: json['title'],
-//     );
-//   }
-// }
-
-
-// Future<List<User>> getRequest() async {
-// Future<http.Response> getSirenOn() async {
-//     var url = Uri.parse("https://jsonplaceholder.typicode.com/posts/1");
-//     final response = await http.get(url);
-  
-//     var responseData = json.decode(response.body);
-//     print(responseData);
-
-//     return response;
-//   }
-
-// Future<http.Response> getSirenof() async {
-//     var url1 = Uri.parse("https://jsonplaceholder.typicode.com/posts/2");
-//     final response = await http.get(url1);
-  
-//     var responseData = json.decode(response.body);
-//     print(responseData);
-
-//     return response;
-//   }
-
-
-
-
-
-
-
-
-
 class CameraScreen extends StatefulWidget {
 
   @override
@@ -108,10 +57,6 @@ Future<http.Response> getSirenof() async {
       WebView.platform = SurfaceAndroidWebView();
    }
 
-    // var futureAlbum = fetchAlbum();
-    // printFirebase();
-
-    // _dbref = FirebaseDatabase.instance.ref("pi_data/url");
   }
 
 
